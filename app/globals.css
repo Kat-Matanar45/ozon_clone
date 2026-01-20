@@ -23,3 +23,7 @@ body {
 input {
   @apply outline-none;
 }
+
+button {
+  @apply cursor-pointer;
+}
