@@ -4,8 +4,6 @@ import { ReactElement, useState } from "react";
 
 import Image from "next/image";
 
-import cn from 'clsx'
-
 import { SLIDES } from "./slides.data";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
