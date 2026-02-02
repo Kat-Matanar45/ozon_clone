@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-import Header from "../components/layout/header/Header";
+import Header from "@/components/layout/header/Header";
 import TopMenu from "@/components/layout/top-menu/TopMenu";
 import Slider from "@/components/pages/home/slider/Slider";
 

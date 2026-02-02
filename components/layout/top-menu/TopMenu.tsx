@@ -1,3 +1,5 @@
+'use client'
+
 import { ReactElement } from "react";
 
 import Link from "next/link";
@@ -5,8 +7,12 @@ import Link from "next/link";
 import cn from "clsx";
 
 import { topMenu } from "./top-menu-data";
-import LanguageSwitcher from "../language-switcher/LanguageSwitcher";
+
+// import LanguageSwitcher from "../language-switcher/LanguageSwitcher";
 import { Dot } from "lucide-react";
+import dynamic from "next/dynamic";
+
+const DynamicLanguageSwitcher = dynamic(() => import("../language-switcher/LanguageSwitcher").then(mod => mod.default), {ssr: false})
 
 const TopMenu = (): ReactElement => {
   return (
@@ -36,7 +42,7 @@ const TopMenu = (): ReactElement => {
           <button className="text-primary font-semibold">Укажите адрес</button>
         </div>
         <div>
-          <LanguageSwitcher />
+          <DynamicLanguageSwitcher />
         </div>
       </div>
     </div>
