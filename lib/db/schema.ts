@@ -42,3 +42,11 @@ export const orders = sqliteTable('orders', {
     status: text('status').notNull().default('pending'),
     createdAt: text('created_at').notNull().default(sql`(CURRENT_TIMESTAMP)`)
 })
+
+export const ordersItems = sqliteTable('orders_items', { 
+    id: text('id').primaryKey(),
+    orderId: text('order_id').notNull().references(() => orders.id, {onDelete: 'cascade'}),
+    productId: text('product_id').notNull().references(() => products.id, {onDelete: 'cascade'}),
+    quantity: integer('quantity').notNull().default(1),
+    price: integer('price').notNull()
+})
