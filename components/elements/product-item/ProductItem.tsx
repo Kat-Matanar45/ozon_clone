@@ -1,11 +1,11 @@
-import { ReactElement } from "react";
-
-const ProductItem = (): ReactElement => {
-    return (
-        <>
-        
-        </>
-    )
+interface Props {
+    productId?: string
 }
 
-export default ProductItem;
+export function ProductItem({}: Props) {
+    return (
+        <div>
+        
+        </div>
+    )
+}
