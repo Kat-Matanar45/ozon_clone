@@ -1,52 +1,73 @@
-import { sql } from "drizzle-orm/sql/sql";
 import { sqliteTable, text, integer, real, int } from "drizzle-orm/sqlite-core";
 
-export const users = sqliteTable('users', {
-    id: int().primaryKey({autoIncrement: true}),
+export const user = sqliteTable('user', {
+    id: text('id').primaryKey(),
     email: text('email').notNull().unique(),
-    password: text('password').notNull(),
+    emailVerified: int('email_verified', {mode: 'boolean'}).notNull().default(false),
+    // password: text('password').notNull(),
     name: text('name'),
-    createdAt: text('created_at').notNull().default(sql`(CURRENT_TIMESTAMP)`),
-    updatedAt: text('updated_at').notNull().default(sql`(CURRENT_TIMESTAMP)`).$onUpdate(() => sql`(CURRENT_TIMESTAMP)`)
+    createdAt: int('created_at', {mode: 'timestamp'}).notNull().$defaultFn(() => new Date()),
+    updatedAt: int('updated_at', {mode: 'timestamp'}).notNull().$defaultFn(() => new Date())
 })
 
-export const sessions = sqliteTable('sessions', {
-    id: int().primaryKey({autoIncrement: true}),
-    userId: text('user_id').notNull().references(() => users.id, {onDelete: 'cascade'}),
+export const session = sqliteTable('session', {
+    id: text('id').primaryKey(),
+    userId: int('user_id').notNull().references(() => user.id, {onDelete: 'cascade'}),
     expiresAt: text('expires_at').notNull(),
 })
 
-export const reviews = sqliteTable('reviews', {
-    id: int().primaryKey({autoIncrement: true}),
-    userId: int('user_id').notNull().references(() => users.id, {onDelete: 'cascade'}),
-    productId: int('product_id').notNull().references(() => products.id, {onDelete: 'cascade'}),
+export const account = sqliteTable("account", {
+    id: text("id").primaryKey(),
+    userId: text("user_id")
+        .notNull()
+        .references(() => user.id, { onDelete: "cascade" }),
+
+    accountId: text("account_id").notNull(),
+    providerId: text("provider_id").notNull(),
+
+    password: text("password"), // тут хранится хеш
+    createdAt: int("created_at", { mode: "timestamp" })
+        .notNull()
+        .$defaultFn(() => new Date()),
+    updatedAt: int("updated_at", { mode: "timestamp" })
+        .notNull()
+        .$defaultFn(() => new Date()),
+});
+
+export const review = sqliteTable('review', {
+    id: text('id').primaryKey(),
+    userId: int('user_id').notNull().references(() => user.id, {onDelete: 'cascade'}),
+    productId: int('product_id').notNull().references(() => product.id, {onDelete: 'cascade'}),
     rating: real('rating').notNull(),
     comment: text('comment'),
-    createdAt: text('created_at').notNull().default(sql`(CURRENT_TIMESTAMP)`)
+    createdAt: int('created_at', {mode: 'timestamp'}).notNull().$defaultFn(() => new Date()),
+    updatedAt: int('updated_at', {mode: 'timestamp'}).notNull().$defaultFn(() => new Date())
 })
 
-export const products = sqliteTable('products', { 
-    id: int().primaryKey({autoIncrement: true}),
+export const product = sqliteTable('product', { 
+    id: text('id').primaryKey(),
     name: text('name').notNull(),
     description: text('description'),
     price: int('price').notNull(),
     discountPrice: int('discount_price'),
     image: text('image_url').notNull(),
-    createdAt: text('created_at').notNull().default(sql`(CURRENT_TIMESTAMP)`)
+    createdAt: int('created_at', {mode: 'timestamp'}).notNull().$defaultFn(() => new Date()),
+    updatedAt: int('updated_at', {mode: 'timestamp'}).notNull().$defaultFn(() => new Date())
 })
 
-export const orders = sqliteTable('orders', { 
-    id: int().primaryKey({autoIncrement: true}),
-    userId: int('user_id').notNull().references(() => users.id, {onDelete: 'cascade'}),
+export const order = sqliteTable('order', { 
+    id: text('id').primaryKey(),
+    userId: int('user_id').notNull().references(() => user.id, {onDelete: 'cascade'}),
     total: integer('total').notNull(),
     status: text('status').notNull().default('pending'),
-    createdAt: text('created_at').notNull().default(sql`(CURRENT_TIMESTAMP)`)
+    createdAt: int('created_at', {mode: 'timestamp'}).notNull().$defaultFn(() => new Date()),
+    updatedAt: int('updated_at', {mode: 'timestamp'}).notNull().$defaultFn(() => new Date())
 })
 
-export const ordersItems = sqliteTable('orders_items', { 
-    id: int().primaryKey({autoIncrement: true}),
-    orderId: int('order_id').notNull().references(() => orders.id, {onDelete: 'cascade'}),
-    productId: int('product_id').notNull().references(() => products.id, {onDelete: 'cascade'}),
+export const ordersItem = sqliteTable('order_item', { 
+    id: text('id').primaryKey(),
+    orderId: int('order_id').notNull().references(() => order.id, {onDelete: 'cascade'}),
+    productId: int('product_id').notNull().references(() => product.id, {onDelete: 'cascade'}),
     quantity: integer('quantity').notNull().default(1),
     price: integer('price').notNull()
 })

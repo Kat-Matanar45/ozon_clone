@@ -7,6 +7,7 @@ import { Dispatch, RefObject, useState } from "react";
 import { Field } from "@/components/ui/Field";
 import { Button } from "@/components/ui/Button";
 import { Modal } from "@/components/ui/Modal";
+import { CircleAlert } from "lucide-react";
 
 interface Props {
     setIsOpen: Dispatch<React.SetStateAction<boolean>>
@@ -20,8 +21,14 @@ export function Auth({setIsOpen, ref}: Props) {
     const [password, setPassword] = useState('');
     const [name, setName] = useState('');
 
+    const [error, setError] = useState<string | null>(null)
+
     const handleSingUp = async () => {
-        await signUp.email({ email, password, name })
+        const {error} = await signUp.email({ email, password, name })
+
+        if (error?.message) {
+            setError(error.message)
+        }
     }
 
     const handleSingIn = async () => {
@@ -34,6 +41,13 @@ export function Auth({setIsOpen, ref}: Props) {
             ref={ref}
         >
                 <h1 className="text-3xl font-bold mb-5">Вход / регистрация</h1>
+
+                {error && (
+                    <div className="text-red-500 flex items-center mb-4 gap-1.5">
+                        <CircleAlert/>
+                        <p className="italic">{error}</p>
+                    </div>
+                )}
 
                 {isPending ? <SkeletonLoader count={3} className="mb-3 w-full h-13.25"/> : 
                     <>

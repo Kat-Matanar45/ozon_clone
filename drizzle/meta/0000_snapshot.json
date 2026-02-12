@@ -1,11 +1,11 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "0bafee2a-8693-406e-bb7a-242e8b8188be",
+  "id": "2883f486-5728-4646-9742-14a40ea5cbaa",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
-    "orders": {
-      "name": "orders",
+    "account": {
+      "name": "account",
       "columns": {
         "id": {
           "name": "id",
@@ -17,6 +17,79 @@
         "user_id": {
           "name": "user_id",
           "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "account_id": {
+          "name": "account_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "provider_id": {
+          "name": "provider_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "password": {
+          "name": "password",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "account_user_id_user_id_fk": {
+          "name": "account_user_id_user_id_fk",
+          "tableFrom": "account",
+          "tableTo": "user",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
+    "order": {
+      "name": "order",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "integer",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
@@ -38,19 +111,25 @@
         },
         "created_at": {
           "name": "created_at",
-          "type": "text",
+          "type": "integer",
           "primaryKey": false,
           "notNull": true,
-          "autoincrement": false,
-          "default": "(CURRENT_TIMESTAMP)"
+          "autoincrement": false
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
         }
       },
       "indexes": {},
       "foreignKeys": {
-        "orders_user_id_users_id_fk": {
-          "name": "orders_user_id_users_id_fk",
-          "tableFrom": "orders",
-          "tableTo": "users",
+        "order_user_id_user_id_fk": {
+          "name": "order_user_id_user_id_fk",
+          "tableFrom": "order",
+          "tableTo": "user",
           "columnsFrom": [
             "user_id"
           ],
@@ -65,8 +144,8 @@
       "uniqueConstraints": {},
       "checkConstraints": {}
     },
-    "orders_items": {
-      "name": "orders_items",
+    "order_item": {
+      "name": "order_item",
       "columns": {
         "id": {
           "name": "id",
@@ -77,14 +156,14 @@
         },
         "order_id": {
           "name": "order_id",
-          "type": "text",
+          "type": "integer",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
         },
         "product_id": {
           "name": "product_id",
-          "type": "text",
+          "type": "integer",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
@@ -107,10 +186,10 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "orders_items_order_id_orders_id_fk": {
-          "name": "orders_items_order_id_orders_id_fk",
-          "tableFrom": "orders_items",
-          "tableTo": "orders",
+        "order_item_order_id_order_id_fk": {
+          "name": "order_item_order_id_order_id_fk",
+          "tableFrom": "order_item",
+          "tableTo": "order",
           "columnsFrom": [
             "order_id"
           ],
@@ -120,10 +199,10 @@
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
-        "orders_items_product_id_products_id_fk": {
-          "name": "orders_items_product_id_products_id_fk",
-          "tableFrom": "orders_items",
-          "tableTo": "products",
+        "order_item_product_id_product_id_fk": {
+          "name": "order_item_product_id_product_id_fk",
+          "tableFrom": "order_item",
+          "tableTo": "product",
           "columnsFrom": [
             "product_id"
           ],
@@ -138,8 +217,8 @@
       "uniqueConstraints": {},
       "checkConstraints": {}
     },
-    "products": {
-      "name": "products",
+    "product": {
+      "name": "product",
       "columns": {
         "id": {
           "name": "id",
@@ -185,11 +264,17 @@
         },
         "created_at": {
           "name": "created_at",
-          "type": "text",
+          "type": "integer",
           "primaryKey": false,
           "notNull": true,
-          "autoincrement": false,
-          "default": "(CURRENT_TIMESTAMP)"
+          "autoincrement": false
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
         }
       },
       "indexes": {},
@@ -198,8 +283,8 @@
       "uniqueConstraints": {},
       "checkConstraints": {}
     },
-    "reviews": {
-      "name": "reviews",
+    "review": {
+      "name": "review",
       "columns": {
         "id": {
           "name": "id",
@@ -210,14 +295,14 @@
         },
         "user_id": {
           "name": "user_id",
-          "type": "text",
+          "type": "integer",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
         },
         "product_id": {
           "name": "product_id",
-          "type": "text",
+          "type": "integer",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
@@ -238,19 +323,25 @@
         },
         "created_at": {
           "name": "created_at",
-          "type": "text",
+          "type": "integer",
           "primaryKey": false,
           "notNull": true,
-          "autoincrement": false,
-          "default": "(CURRENT_TIMESTAMP)"
+          "autoincrement": false
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
         }
       },
       "indexes": {},
       "foreignKeys": {
-        "reviews_user_id_users_id_fk": {
-          "name": "reviews_user_id_users_id_fk",
-          "tableFrom": "reviews",
-          "tableTo": "users",
+        "review_user_id_user_id_fk": {
+          "name": "review_user_id_user_id_fk",
+          "tableFrom": "review",
+          "tableTo": "user",
           "columnsFrom": [
             "user_id"
           ],
@@ -260,10 +351,10 @@
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
-        "reviews_product_id_products_id_fk": {
-          "name": "reviews_product_id_products_id_fk",
-          "tableFrom": "reviews",
-          "tableTo": "products",
+        "review_product_id_product_id_fk": {
+          "name": "review_product_id_product_id_fk",
+          "tableFrom": "review",
+          "tableTo": "product",
           "columnsFrom": [
             "product_id"
           ],
@@ -278,8 +369,8 @@
       "uniqueConstraints": {},
       "checkConstraints": {}
     },
-    "sessions": {
-      "name": "sessions",
+    "session": {
+      "name": "session",
       "columns": {
         "id": {
           "name": "id",
@@ -290,7 +381,7 @@
         },
         "user_id": {
           "name": "user_id",
-          "type": "text",
+          "type": "integer",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
@@ -305,10 +396,10 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "sessions_user_id_users_id_fk": {
-          "name": "sessions_user_id_users_id_fk",
-          "tableFrom": "sessions",
-          "tableTo": "users",
+        "session_user_id_user_id_fk": {
+          "name": "session_user_id_user_id_fk",
+          "tableFrom": "session",
+          "tableTo": "user",
           "columnsFrom": [
             "user_id"
           ],
@@ -323,8 +414,8 @@
       "uniqueConstraints": {},
       "checkConstraints": {}
     },
-    "users": {
-      "name": "users",
+    "user": {
+      "name": "user",
       "columns": {
         "id": {
           "name": "id",
@@ -340,12 +431,13 @@
           "notNull": true,
           "autoincrement": false
         },
-        "password": {
-          "name": "password",
-          "type": "text",
+        "email_verified": {
+          "name": "email_verified",
+          "type": "integer",
           "primaryKey": false,
           "notNull": true,
-          "autoincrement": false
+          "autoincrement": false,
+          "default": false
         },
         "name": {
           "name": "name",
@@ -356,24 +448,22 @@
         },
         "created_at": {
           "name": "created_at",
-          "type": "text",
+          "type": "integer",
           "primaryKey": false,
           "notNull": true,
-          "autoincrement": false,
-          "default": "(CURRENT_TIMESTAMP)"
+          "autoincrement": false
         },
         "updated_at": {
           "name": "updated_at",
-          "type": "text",
+          "type": "integer",
           "primaryKey": false,
           "notNull": true,
-          "autoincrement": false,
-          "default": "(CURRENT_TIMESTAMP)"
+          "autoincrement": false
         }
       },
       "indexes": {
-        "users_email_unique": {
-          "name": "users_email_unique",
+        "user_email_unique": {
+          "name": "user_email_unique",
           "columns": [
             "email"
           ],
