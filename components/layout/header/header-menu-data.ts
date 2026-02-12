@@ -1,12 +1,7 @@
 import { PagesConfig } from "@/config/pages.config"
-import { Heart, Package, ShoppingBasket, User } from "lucide-react"
+import { Heart, Package, ShoppingBasket } from "lucide-react"
 
 export const headerMenu = [
-    {
-        title: "Войти",
-        icon: User,
-        href: PagesConfig.LOGIN
-    },
     {
         title: "Заказы",
         icon: Package,

@@ -2,12 +2,18 @@
 
 import { SkeletonLoader } from "@/components/ui/SkeletonLoader";
 import { signIn, signUp, useSession } from "@/lib/db/auth-client"
-import { useState } from "react";
+import { Dispatch, RefObject, useState } from "react";
 
 import { Field } from "@/components/ui/Field";
 import { Button } from "@/components/ui/Button";
+import { Modal } from "@/components/ui/Modal";
 
-export function Auth() {
+interface Props {
+    setIsOpen: Dispatch<React.SetStateAction<boolean>>
+    ref: RefObject<HTMLDivElement | null>
+}
+
+export function Auth({setIsOpen, ref}: Props) {
     const {isPending} = useSession();
 
     const [email, setEmail] = useState('');
@@ -23,11 +29,13 @@ export function Auth() {
     }
 
     return (
-        <div className="h-screen w-screen flex justify-center items-center bg-blue-50">
-            <div className="bg-white p-5 rounded-3xl shadow-lg w-sm">
+        <Modal 
+            onClose={() => setIsOpen(false)}
+            ref={ref}
+        >
                 <h1 className="text-3xl font-bold mb-5">Вход / регистрация</h1>
 
-                {isPending ? <SkeletonLoader count={3}/> : 
+                {isPending ? <SkeletonLoader count={3} className="mb-3 w-full h-13.25"/> : 
                     <>
                         <Field 
                             type='email' 
@@ -57,15 +65,17 @@ export function Auth() {
                     >
                         {isPending ? 'Загрузка...' : "Войти"}
                     </Button>
-                    <Button 
-                        variant="secondary"
-                        onClick={handleSingUp}
-                        disabled={isPending}
-                    >
-                        {isPending ? 'Загрузка...' : "Регистрация"}
-                    </Button>
+                    {
+                        isPending ? null :
+                        <Button 
+                            variant="secondary"
+                            onClick={handleSingUp}
+                            disabled={isPending}
+                        >
+                            Регистрация
+                        </Button>
+                    }
                 </div>
-            </div>
-        </div>
+            </Modal>
     )
 }

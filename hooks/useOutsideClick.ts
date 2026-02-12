@@ -1,3 +1,5 @@
+'use client'
+
 import { useEffect, useRef, useState } from "react";
 
 export function useOutsideClick<T extends HTMLElement = HTMLElement>(
@@ -6,17 +8,18 @@ export function useOutsideClick<T extends HTMLElement = HTMLElement>(
     const ref = useRef<T>(null)
     const [isOpen, setIsOpen] = useState(initialState)
 
-    useEffect(() => {
+    
         const handleClick = (event: MouseEvent) => {
             if (ref.current && !ref.current.contains(event.target as Node)) {
                 setIsOpen(false)
             }
         }
 
-        document.addEventListener('mousedown', handleClick)
+    useEffect(() => {
+        document.addEventListener('click', handleClick, true)
 
         return () => {
-            document.addEventListener('mousedown', handleClick)
+            document.addEventListener('click', handleClick, true)
         }
     }, [])
 

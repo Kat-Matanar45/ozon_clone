@@ -27,3 +27,17 @@ input {
 button {
   @apply cursor-pointer;
 }
+
+.fadeIn {
+  animation: fadeIn 0.4s;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
