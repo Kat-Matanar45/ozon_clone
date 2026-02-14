@@ -5,6 +5,9 @@ import TopMenu from "@/components/layout/top-menu/TopMenu";
 import Slider from "@/components/pages/home/slider/Slider";
 
 export default function Home() {
+
+  
+
   return (
     <div className="container mx-auto">
       <Header />
@@ -17,6 +20,10 @@ export default function Home() {
         className="mx-auto mt-6"
       />
       <Slider />
+
+      <div>
+
+      </div>
     </div>
   );
 }
