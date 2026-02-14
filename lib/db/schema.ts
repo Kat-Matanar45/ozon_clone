@@ -4,7 +4,6 @@ export const user = sqliteTable('user', {
     id: text('id').primaryKey(),
     email: text('email').notNull().unique(),
     emailVerified: int('email_verified', {mode: 'boolean'}).notNull().default(false),
-    // password: text('password').notNull(),
     name: text('name'),
     createdAt: int('created_at', {mode: 'timestamp'}).notNull().$defaultFn(() => new Date()),
     updatedAt: int('updated_at', {mode: 'timestamp'}).notNull().$defaultFn(() => new Date())

@@ -19,7 +19,7 @@ export function useOutsideClick<T extends HTMLElement = HTMLElement>(
         document.addEventListener('click', handleClick, true)
 
         return () => {
-            document.addEventListener('click', handleClick, true)
+            document.removeEventListener('click', handleClick, true)
         }
     }, [])
 

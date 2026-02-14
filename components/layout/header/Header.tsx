@@ -1,6 +1,6 @@
 "use client";
 
-import { ReactElement } from "react";
+import { ReactElement, useEffect } from "react";
 
 import Image from "next/image";
 import Link from "next/link";
@@ -13,12 +13,28 @@ import { headerMenu } from "./header-menu-data";
 import { LayoutGrid, Search, User } from "lucide-react";
 import { useOutsideClick } from "@/hooks/useOutsideClick";
 import { Auth } from "./Auth";
+import { useSession } from "@/lib/db/auth-client";
+import { ProfileMenu } from "./ProfileMenu";
 
 const Header = (): ReactElement => {
 
   const t = useTranslations('header');
 
-  const {isOpen, ref, setIsOpen} = useOutsideClick<HTMLDivElement>(false)
+  const { data } = useSession();
+
+  const {isOpen, ref, setIsOpen} = useOutsideClick<HTMLDivElement>(false);
+
+  const {
+    isOpen: isProfileMenuOpen, 
+    ref: profileMenuRef, 
+    setIsOpen: setProfileMenuOpen
+  } = useOutsideClick<HTMLDivElement>(false);
+
+  useEffect(() => {
+    if (data?.user) {
+      setIsOpen(false)
+    }
+  }, [data, setIsOpen])
 
   return (
     <>
@@ -49,13 +65,30 @@ const Header = (): ReactElement => {
         </div>
 
         <div className="flex gap-5 items-center ml-2 justify-end">
-          <button
+          {data?.user ? (
+            <div className="relative" ref={profileMenuRef}>
+              <button
+                className={cn('flex items-center flex-col')}
+                onClick={() => setProfileMenuOpen(!isProfileMenuOpen)}
+              >
+                <User size={20} />
+                <span className="text-sm font-medium">
+                  {data.user.name || data.user.email}
+                </span>
+              </button>
+
+              {isProfileMenuOpen && <ProfileMenu setIsProfileMenuOpen={setProfileMenuOpen}/>}
+            </div>
+          ) : (
+            <button
               className={"flex items-center flex-col"}
               onClick={() => setIsOpen(true)}
             >
               <User size={20} />
               <span className="text-sm font-medium">Войти</span>
             </button>
+          )}
+          
 
           {headerMenu.map((item) => (
             <Link
