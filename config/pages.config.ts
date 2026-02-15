@@ -4,6 +4,7 @@ export class PagesConfig {
     static readonly ORDERS = '/orders';
     static readonly FAVORITES = '/favorites';
     static readonly CART = '/cart';
+    static readonly ADMIN = '/admin';
 
     static PRODUCT_DETAILS(slug: string){
         return `/product/${slug}`

@@ -5,14 +5,19 @@ export const user = sqliteTable('user', {
     email: text('email').notNull().unique(),
     emailVerified: int('email_verified', {mode: 'boolean'}).notNull().default(false),
     name: text('name'),
-    createdAt: int('created_at', {mode: 'timestamp'}).notNull().$defaultFn(() => new Date()),
-    updatedAt: int('updated_at', {mode: 'timestamp'}).notNull().$defaultFn(() => new Date())
+    createdAt: int('created_at').notNull().$defaultFn(() => Date.now()),
+    updatedAt: int('updated_at').notNull().$defaultFn(() => Date.now())
 })
 
 export const session = sqliteTable('session', {
     id: text('id').primaryKey(),
-    userId: int('user_id').notNull().references(() => user.id, {onDelete: 'cascade'}),
+    userId: text('user_id').notNull().references(() => user.id, {onDelete: 'cascade'}),
     expiresAt: text('expires_at').notNull(),
+    token: text('token').notNull().unique(),
+    createdAt: int('created_at').notNull().$defaultFn(() => Date.now()),
+    updatedAt: int('updated_at').notNull().$defaultFn(() => Date.now()),
+    ipAddress: text('ipAddress'),
+    userAgent: text('userAgent')
 })
 
 export const account = sqliteTable("account", {
@@ -24,23 +29,26 @@ export const account = sqliteTable("account", {
     accountId: text("account_id").notNull(),
     providerId: text("provider_id").notNull(),
 
+    accessToken: text('accessToken'),
+    refreshToken: text('refreshToken'),
+    idToken: text('idToken'),
+    accessTokenExpiresAt: int('accessTokenExpiresAt', {mode: 'timestamp'}),
+    refreshTokenExpiresAt: int('refreshTokenExpiresAt', {mode: 'timestamp'}),
+    scope: text('scope'),
+
     password: text("password"), // тут хранится хеш
-    createdAt: int("created_at", { mode: "timestamp" })
-        .notNull()
-        .$defaultFn(() => new Date()),
-    updatedAt: int("updated_at", { mode: "timestamp" })
-        .notNull()
-        .$defaultFn(() => new Date()),
+    createdAt: int('created_at').notNull().$defaultFn(() => Date.now()),
+    updatedAt: int('updated_at').notNull().$defaultFn(() => Date.now())
 });
 
 export const review = sqliteTable('review', {
     id: text('id').primaryKey(),
-    userId: int('user_id').notNull().references(() => user.id, {onDelete: 'cascade'}),
+    userId: text('user_id').notNull().references(() => user.id, {onDelete: 'cascade'}),
     productId: int('product_id').notNull().references(() => product.id, {onDelete: 'cascade'}),
     rating: real('rating').notNull(),
     comment: text('comment'),
-    createdAt: int('created_at', {mode: 'timestamp'}).notNull().$defaultFn(() => new Date()),
-    updatedAt: int('updated_at', {mode: 'timestamp'}).notNull().$defaultFn(() => new Date())
+    createdAt: int('created_at').notNull().$defaultFn(() => Date.now()),
+    updatedAt: int('updated_at').notNull().$defaultFn(() => Date.now())
 })
 
 export const product = sqliteTable('product', { 
@@ -50,8 +58,8 @@ export const product = sqliteTable('product', {
     price: int('price').notNull(),
     discountPrice: int('discount_price'),
     image: text('image_url').notNull(),
-    createdAt: int('created_at', {mode: 'timestamp'}).notNull().$defaultFn(() => new Date()),
-    updatedAt: int('updated_at', {mode: 'timestamp'}).notNull().$defaultFn(() => new Date())
+    createdAt: int('created_at').notNull().$defaultFn(() => Date.now()),
+    updatedAt: int('updated_at').notNull().$defaultFn(() => Date.now())
 })
 
 export const order = sqliteTable('order', { 
@@ -59,8 +67,8 @@ export const order = sqliteTable('order', {
     userId: int('user_id').notNull().references(() => user.id, {onDelete: 'cascade'}),
     total: integer('total').notNull(),
     status: text('status').notNull().default('pending'),
-    createdAt: int('created_at', {mode: 'timestamp'}).notNull().$defaultFn(() => new Date()),
-    updatedAt: int('updated_at', {mode: 'timestamp'}).notNull().$defaultFn(() => new Date())
+    createdAt: int('created_at').notNull().$defaultFn(() => Date.now()),
+    updatedAt: int('updated_at').notNull().$defaultFn(() => Date.now())
 })
 
 export const ordersItem = sqliteTable('order_item', { 

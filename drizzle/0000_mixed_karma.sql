@@ -3,6 +3,12 @@ CREATE TABLE `account` (
 	`user_id` text NOT NULL,
 	`account_id` text NOT NULL,
 	`provider_id` text NOT NULL,
+	`accessToken` text,
+	`refreshToken` text,
+	`idToken` text,
+	`accessTokenExpiresAt` integer,
+	`refreshTokenExpiresAt` integer,
+	`scope` text,
 	`password` text,
 	`created_at` integer NOT NULL,
 	`updated_at` integer NOT NULL,
@@ -42,7 +48,7 @@ CREATE TABLE `product` (
 --> statement-breakpoint
 CREATE TABLE `review` (
 	`id` text PRIMARY KEY NOT NULL,
-	`user_id` integer NOT NULL,
+	`user_id` text NOT NULL,
 	`product_id` integer NOT NULL,
 	`rating` real NOT NULL,
 	`comment` text,
@@ -54,11 +60,17 @@ CREATE TABLE `review` (
 --> statement-breakpoint
 CREATE TABLE `session` (
 	`id` text PRIMARY KEY NOT NULL,
-	`user_id` integer NOT NULL,
+	`user_id` text NOT NULL,
 	`expires_at` text NOT NULL,
+	`token` text NOT NULL,
+	`created_at` integer NOT NULL,
+	`updated_at` integer NOT NULL,
+	`ipAddress` text,
+	`userAgent` text,
 	FOREIGN KEY (`user_id`) REFERENCES `user`(`id`) ON UPDATE no action ON DELETE cascade
 );
 --> statement-breakpoint
+CREATE UNIQUE INDEX `session_token_unique` ON `session` (`token`);--> statement-breakpoint
 CREATE TABLE `user` (
 	`id` text PRIMARY KEY NOT NULL,
 	`email` text NOT NULL,

@@ -15,9 +15,10 @@ export function ProfileMenu({setIsProfileMenuOpen}: Props) {
 
     return (
         <div 
-            className="fadeIn absolute top-full right-0 mt-2 bg-white rounded-md shadow-2xl p-4 z-10 flex flex-col gap-2 items-start"
+            className="fadeIn absolute top-full right-0 mt-2 bg-white rounded-md shadow-2xl p-4 z-10 flex flex-col gap-2 items-start w-40"
         >
             <Link href='/profile' className="transition-colors hover:text-primary">Профиль</Link>
+            <Link href='/bad-admin' className="transition-colors hover:text-primary">Admin</Link>
             <button className='transition-colors hover:text-primary' onClick={handleLogOut}>Выйти</button>
         </div>
     )
