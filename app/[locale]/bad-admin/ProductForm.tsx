@@ -17,7 +17,7 @@ export function ProductForm({product}: Props) {
         await createReview(formData)
         formRef.current?.reset()
         setLoading(false)
-        alert('Отзыв добавлен')
+        alert('Товар добавлен')
     }
 
     return (
@@ -29,46 +29,47 @@ export function ProductForm({product}: Props) {
             <h2 className="text-2xl font-bold mb-4">Добавить отзыв</h2>
 
             <div>
-                <label className="block text-sm font-medium mb-4">User ID</label>
+                <label className="block text-sm font-medium mb-4">Название</label>
                 <input 
                     type="text" 
-                    name='userId'
+                    name='nameProduct'
                     required
-                    placeholder="user_id_from_auth"
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
             </div>
 
             <div>
-                <label className="block text-sm font-medium mb-1">Товар</label>
-                <select 
-                    name='productId'
-                    required
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                >
-                    <option value=''>Выберите товар</option>
-                    {product.map(product => (
-                        <option 
-                            key={product.id}
-                            value={product.id}
-                        >
-                            {product.name}
-                        </option>
-                    ))}
-                </select>
-            </div>
-
-            <div>
-                <label className="block text-sm font-medium mb-4">Рейтинг (1-5)</label>
-                <input 
-                    type="number" 
-                    name='rating'
-                    required
-                    min='1'
-                    max='5'
-                    step='0.1'
+                <label className="block text-sm font-medium mb-4">Описание</label>
+                <textarea 
+                    name='description'
+                    rows={4}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
+            </div>
+
+            <div className="flex items-center gap-5">
+                <div>
+                    <label className="block text-sm font-medium mb-4">Цена</label>
+                    <input 
+                        type="number" 
+                        name='price'
+                        required
+                        min={0}
+                        step='0.1'
+                        className="w-85 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                </div>
+                <div>
+                    <label className="block text-sm font-medium mb-4">Цена со скидкой</label>
+                    <input 
+                        type="number" 
+                        name='price'
+                        required
+                        min={0}
+                        step='0.1'
+                        className="w-85 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                </div>
             </div>
 
             <div>

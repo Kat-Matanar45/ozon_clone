@@ -1,7 +1,7 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "b3e615a0-d2ef-42d5-949d-1f991f7da449",
+  "id": "39d3b658-c9f2-496b-81d0-c378b4d0fad5",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "account": {
@@ -131,7 +131,7 @@
         },
         "user_id": {
           "name": "user_id",
-          "type": "integer",
+          "type": "text",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
@@ -198,7 +198,7 @@
         },
         "order_id": {
           "name": "order_id",
-          "type": "integer",
+          "type": "text",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
@@ -344,7 +344,7 @@
         },
         "product_id": {
           "name": "product_id",
-          "type": "integer",
+          "type": "text",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
@@ -430,7 +430,7 @@
         },
         "expires_at": {
           "name": "expires_at",
-          "type": "text",
+          "type": "integer",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false

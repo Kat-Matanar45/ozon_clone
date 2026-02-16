@@ -17,7 +17,7 @@ export function ProductList({products}: Props) {
     };
 
     return (
-        <div className='bd-white p-6 rounded-lg shadow'>
+        <div className='bg-white p-6 rounded-lg shadow'>
             <h2 className='text-2xl font-bold mb-4'>
                 Список товаров ({products.length})
             </h2>
