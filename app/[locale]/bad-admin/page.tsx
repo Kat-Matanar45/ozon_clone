@@ -22,7 +22,7 @@ export default async function Page() {
             </h1>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-                <ProductForm product={products}/>
+                <ProductForm/>
                 <ReviewForm product={products}/>
             </div>
 

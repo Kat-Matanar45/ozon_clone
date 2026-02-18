@@ -30,11 +30,22 @@ export function ReviewList({reviews}: Props) {
                             <div>
                                 <div className="flex items-center gap-2 mb-1">
                                     <span className="font-semibold">Product ID: {review.productId}</span>
-                                    <span className="text-yellow-400 text-sm">{Math.round(review.rating)}</span>
+                                    <span className="text-yellow-400 text-sm">
+                                        {"★".repeat(Math.round(review.rating))}
+                                        {"☆".repeat(5 - Math.round(review.rating))}
+                                    </span>
+                                    <span className='text-gray-400'>({review.rating})</span>
                                 </div>
                                 <p className="text-sm text-gray-600">User: {review.userId}</p>
                                 {review.comment && <p className="text-sm mt-1">{review.comment}</p>}
                             </div>
+
+                            <button 
+                                onClick={() => handleDelete(review.id)}
+                                className='text-red-600 hover:text-red-800 p-2'
+                            >
+                                <Trash2 size={20}/>
+                            </button>
                         </div>
                     ))
                 )}

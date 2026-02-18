@@ -1,3 +1,4 @@
+import { relations } from "drizzle-orm";
 import { sqliteTable, text, real, int } from "drizzle-orm/sqlite-core";
 
 export const user = sqliteTable('user', {
@@ -78,3 +79,17 @@ export const ordersItem = sqliteTable('order_item', {
     quantity: int('quantity').notNull().default(1),
     price: int('price').notNull()
 })
+
+export const productRelation = relations(product, ({ many }) => ({
+    reviews: many(review)
+}))
+
+export const reviewRelation = relations(review, ({ one }) => ({
+    product: one(product),
+    user: one(user)
+}))
+
+export const userRelation = relations(user, ({ many }) => ({
+    reviews: many(review),
+    order: many(order)
+}))

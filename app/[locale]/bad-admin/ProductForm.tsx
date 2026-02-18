@@ -1,20 +1,16 @@
 'use client'
 
-import { createReview } from "@/lib/actions/admin";
+import { createProduct } from "@/lib/actions/admin";
 import { TProduct } from "@/lib/db/types";
 import { useRef, useState } from 'react'
 
-interface Props {
-    product: TProduct[]
-}
-
-export function ProductForm({product}: Props) {
+export function ProductForm() {
     const formRef = useRef<HTMLFormElement>(null);
     const [loading, setLoading] = useState(false);
 
     const handleSubmit = async (formData: FormData) => {
         setLoading(true)
-        await createReview(formData)
+        await createProduct(formData)
         formRef.current?.reset()
         setLoading(false)
         alert('Товар добавлен')
@@ -32,7 +28,7 @@ export function ProductForm({product}: Props) {
                 <label className="block text-sm font-medium mb-4">Название</label>
                 <input 
                     type="text" 
-                    name='nameProduct'
+                    name='name'
                     required
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
@@ -63,8 +59,7 @@ export function ProductForm({product}: Props) {
                     <label className="block text-sm font-medium mb-4">Цена со скидкой</label>
                     <input 
                         type="number" 
-                        name='price'
-                        required
+                        name='discountPrice'
                         min={0}
                         step='0.1'
                         className="w-85 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"

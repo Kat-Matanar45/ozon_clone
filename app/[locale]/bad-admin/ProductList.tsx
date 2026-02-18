@@ -1,7 +1,6 @@
 'use client'
 
 import { deleteProduct } from '@/lib/actions/admin';
-import { product } from '@/lib/db/schema';
 import { TProduct } from '@/lib/db/types';
 import { Trash2 } from 'lucide-react';
 
@@ -35,10 +34,11 @@ export function ProductList({products}: Props) {
                                     <p className='text-sm text-gray-600'>
                                         {product.discountPrice ? (
                                             <>
-                                                <span className='line-through text-gray-400'>{product.price} P</span>
+                                                <span className='line-through text-gray-400'>{product.price} ₽</span>
+                                                <span className='text-red-500 ml-3'>{product.discountPrice} ₽</span>
                                             </>
                                         ) : (
-                                            <span>{product.price} P</span>
+                                            <span>{product.price} ₽</span>
                                         )}
                                     </p>
                                 </div>

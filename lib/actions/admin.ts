@@ -32,12 +32,18 @@ export async function deleteProduct(id: string) {
 }
 
 export async function getAllProducts() {
-    return await db.select().from(product)
+    try {
+        return await db.select().from(product)
+    } catch (e) {
+        console.log('Error fetching products:', e)
+        throw e
+    }
+    
 }
 
 export async function createReview(formData: FormData) {
     const userId = formData.get('userId') as string
-    const productId = parseInt(formData.get('productId') as string)
+    const productId = formData.get('productId') as string
     const rating = parseInt(formData.get('rating') as string)
     const comment = formData.get('comment') as string | null
 
@@ -60,5 +66,11 @@ export async function deleteReview(id: string) {
 }
 
 export async function getAllReviews() {
-    return await db.select().from(review)
+    try {
+        return await db.select().from(review)
+    } catch (e) {
+        console.log('Error fetching reviews:', e)
+        throw e
+    }
+    
 }
